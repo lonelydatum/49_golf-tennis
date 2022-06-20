@@ -10,12 +10,6 @@ const READ = {
 	t2: 3
 }
 
-const SECOND = {
-	t1: 2,
-	t2: 2
-}
-
-
 
 const {w, h} = size
 
@@ -28,6 +22,16 @@ TweenLite.set([".o",  ".proline" ], {
 
 
 	
+function init(){
+	
+	const tl = new TimelineMax({onComplete:()=>{
+		if(document.getElementById("legalBtn")){			
+			TweenLite.set("#legalBtn", {display:"block"})
+		}
+	}})
+	tl.set(".frame1", {opacity:1})
+	return tl
+}
 
 CustomEase.create("custom", "M0,0 C0.14,0 0.234,0.438 0.264,0.561 0.305,0.728 0.4,1.172 0.55,1.172 0.652,1.172 0.722,1.102 0.77,1.024 0.834,0.93 0.89,0.946 0.916,0.946 0.952,0.946 1,1 1,1 ")
 
@@ -55,47 +59,8 @@ function olg(){
     return tl
 }
 
-function bb_a(){
-	const tl = init()
-	tl.from(".o", {duration:.3, scale:1, ease:'back.out', opacity:0}, "+=.2")
-	tl.add("proline", "+=.4")
-	tl.from(".o-shadow", {duration:.1, opacity:0}, "proline")
-	tl.from(".proline", {scale:1, duration:.25, opacity:0, ease:'back.out'}, "proline")
-
-	tl.to(".proline", {duration:.2, opacity:0}, "+=1")
-
-	tl.add("t1-in")
-	tl.from(".t1a", {x:`-${size.w}`, duration:.2}, "t1-in")
-	tl.from(".t1b", {x:size.w, duration:.2}, "t1-in")
-
-	tl.add("t1-out", `+=${SECOND.t1}`)
-	tl.to(".t1a", {x:`-${size.w}`, duration:.3}, "t1-out")
-	tl.to(".t1b", {x:size.w, duration:.3}, "t1-out")
 
 
-	return tl
-}
-
-
-function bbSecond(){
-	const tl = bb_a()
-	tl.to([".o-shadow", ".proline", ".o"], {duration:.1, opacity:0}, "+=.1")
-	tl.from(".bring",  {duration:.25, x:"-=100", opacity:0})
-	tl.add(chev())
-	return tl
-
-
-	
-
-
-	// tl.add("t2-in")
-	// tl.from(".t1c", {x:`-${size.w}`, duration:.2}, "t2-in")
-	// tl.from(".t1d", {x:size.w, duration:.2}, "t2-in")
-
-	// tl.add("t2-out", `+=${SECOND.t2}`)
-	// tl.to(".t1c", {x:`-${size.w}`, duration:.3}, "t2-out")
-	// tl.to(".t1d", {x:size.w, duration:.3}, "t2-out")
-}
 
 
 function bb(){
@@ -142,31 +107,11 @@ function chev(){
 
 
 
-function init(){
-	
-	const tl = new TimelineMax({onComplete:()=>{
-		if(document.getElementById("legalBtn")){			
-			TweenLite.set("#legalBtn", {display:"block"})
-		}
-	}})
-
-	
-
-	tl.set(".frame1", {opacity:1})
-
-	
-
-	return tl
-}
 
 
 
 function HOR(){
-	// import {init, olg, size, chev, bb, bb2, READ} from '../../_common/js/common.js'
-
-
-
-
+	
 	TweenLite.set([".bring" ], {
 		transformOrigin:`${size.w}px ${size.h}px`,
 		x: -size.w/2,
@@ -242,4 +187,7 @@ function cluserF(){
 
 }
 
-export {size, init, olg, chev, bb, bb2, READ, bbSecond, SECOND, HOR, cluserF}
+export {size, init, olg, chev, bb, bb2, READ, HOR, cluserF}
+
+
+

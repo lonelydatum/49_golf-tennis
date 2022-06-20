@@ -1,4 +1,4 @@
-import {READ, init, olg, size, chev, bbSecond, bb2, cluserF} from '../../_common/js/common.js'
+import {READ, init, olg, size, chev, bb2, cluserF} from '../../_common/js/common.js'
 
 
 
