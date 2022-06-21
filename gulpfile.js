@@ -11,7 +11,9 @@ var _JS_        = require('./_assets/_gulp/gulp-js.js');
 var _SCSS_      = require('./_assets/_gulp/gulp-scss.js');
 var _HTML_      = require('./_assets/_gulp/gulp-html.js');
 var _DEPLOY_    = require('./_assets/_gulp/gulp-deploy.js');
-var _ZIP_    = require('./_assets/_gulp/gulp-zip.js');
+var _ZIP_       = require('./_assets/_gulp/gulp-zip.js');
+var _SCREENSHOT_       = require('./_assets/_gulp/gulp-screenshot.js');
+
 var _projectName = '';
 
 
@@ -19,20 +21,6 @@ var browserSync = require('browser-sync').create();
 
 
 
-/*--------------------------------------------------------------------*/
-// helpers
-/*--------------------------------------------------------------------*/
-gulp.task('takana', function() {
-    loadTakana();
-});
-
-gulp.task('set-project-name', function(done){
-    _projectName = getProjectName(done);
-    done();
-})
-/*--------------------------------------------------------------------*/
-// helpers
-/*--------------------------------------------------------------------*/
 
 
 
@@ -62,6 +50,18 @@ gulp.task('zip',  function(done){
         es.merge(tasks).on('end', done);
     })
 })
+
+gulp.task('screenshot',  function(done){
+   
+  gulp.src('./docs/deploy/golf_300x250/index.html')
+  .pipe(localScreenshots({
+    width: ['1600', '1000', '480', '320']
+   }))
+  .pipe(gulp.dest('./images'));
+
+})
+
+
 
 
 
@@ -144,33 +144,4 @@ function loadTakana(){
     takana.run({path:__dirname, includePaths:[] });
 }
 
-function boneHead(msg, done){
-    var boneheadMessage = {title:'Use that lump inside your head',message: ''}
-    boneheadMessage.message = msg;
-    nodifer.notify(boneheadMessage);
-    done(new Error("OOOOPSS"));
-}
-
-function getProjectName(done){
-    if(!argv.path){
-        boneHead( 'You need to include a project name. --path abc_300x250', done );
-    }
-
-    var projectName
-    var parts = argv.path.split("/");
-
-    if(parts.length==1){
-        // just the project neame
-        projectName = parts[0];
-    }else if(parts.length>1){
-        // includes the whole path
-        parts.forEach(function(item){
-            if(item.indexOf("x")>=0){
-                projectName = item;
-            }
-        })
-    }
-    //todo: verify if the user entered a valid project folder
-    return projectName;
-}
 
